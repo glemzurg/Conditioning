@@ -31,7 +31,7 @@ The root-level run.sh will do a build then run so, once the necessary parts are 
 
 (If you cannot execute the shell script, give it executable privileges: sudo chmod a+x run.sh)
 
-# The Affirmations File.
+# The Affirmations File
 
 Every line in the affirmatinos file is either:
 
@@ -59,7 +59,7 @@ The images settings are:
 
 The affirmations.example.txt shows examples of all these setttings.
 
-# The Configurations File.
+# The Configurations File
 
 The Configurations file is a JSON formatted file that has settings like the screen title, slide show speed, and default fonts and outline widths.
 
