@@ -1,0 +1,12 @@
+
+// The first few suggestions.
+*Great things* are coming to me! [pexels-fabian-wiktor-994605.jpg]
+Be /awesome/ everyday. [b:45 pexels-markus-spiske-117843.jpg:100,-200]
+I can get what I want! [pexels-kaique-rocha-775201.jpg]
+
+// More suggestions.
+Sometimes *simpler* is /better./ [b]
+
+// Test values.
+Here is where I want to be! [pexels-ashan-rai-2085998.jpg:0.5:-100,200 w:-100,200:30]
+This place is my dream. [pexels-eberhard-grossgasteiger-2088167.jpg w:200,-100:45]

@@ -1,0 +1,10 @@
+{
+	"Title": "My Powerful Afirmations",
+	"SleepMilli": 1000,
+	"ScreenWidth": 1440,
+	"ScreenHeight": 900,
+	"FontFace": "Georgia",
+	"FontSize": 24,
+	"BlackOutlineScale": 0.07,
+	"WhiteOutlineScale": 0.25
+}
