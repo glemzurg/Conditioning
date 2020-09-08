@@ -15,6 +15,9 @@ func (s *AffirmationSuite) Test_Validate(c *C) {
 
 	// A sample file.
 	text := `
+
+		// A fun title.
+
 		// A comment.
 		here is an affirmation!
 		another one...
@@ -41,7 +44,8 @@ func (s *AffirmationSuite) Test_Validate(c *C) {
 		This is cool [    b:32:12,-34   something.jpeg:3.23:12,-34   ]
 		`
 
-	affirmations := parseAffirmations(text)
+	affirmations, title := parseAffirmations(text)
+	c.Check(title, Equals, "A fun title.")
 	c.Check(affirmations, DeepEquals, []Affirmation{
 		Affirmation{
 			Message: "here is an affirmation!",

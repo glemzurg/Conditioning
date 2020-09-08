@@ -9,9 +9,6 @@ import (
 // Config is the configuration for the system.
 type Config struct {
 
-	// Visuals.
-	Title string // The title on the window bar.
-
 	// The logic.
 	SleepMilli uint // How long to show each slide.
 

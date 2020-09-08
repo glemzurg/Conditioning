@@ -73,14 +73,14 @@ func (s *System) getDisplayBoth() (displayBoth bool) {
 }
 
 // Load loads all the affirmations and prepares them for display.
-func (s *System) Load() (err error) {
+func (s *System) Load() (title string, err error) {
 	s.mux.Lock()
 	defer s.mux.Unlock()
 
 	// Load from the text file.
-	affirmations, err := LoadAffirmations(s.affirmationFilename)
+	affirmations, title, err := LoadAffirmations(s.affirmationFilename)
 	if err != nil {
-		return Error(err)
+		return "", Error(err)
 	}
 
 	// Create a context of the proper dimensions for sizing everything.
@@ -101,7 +101,7 @@ func (s *System) Load() (err error) {
 		if affirmation.Image.Filename != "" {
 			displayImage, err := PrepareImage(s.config, cr, s.imagePath, affirmation.Image)
 			if err != nil {
-				return Error(err)
+				return "", Error(err)
 			}
 			data.displayImage = &displayImage
 		}
@@ -123,7 +123,7 @@ func (s *System) Load() (err error) {
 	// Reset the rendered slide cache.
 	s.clearSlideCacheIfNecessary(0, 0) // Passing 0, 0 should trigger a cache clear.
 
-	return nil
+	return title, nil
 }
 
 // StartStopSlideShow starts a slide show or stops a running one.

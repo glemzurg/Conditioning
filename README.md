@@ -39,6 +39,8 @@ Every line in the affirmatinos file is either:
 * A comment that is ignored (line begins with "//").
 * A blank line.
 
+The first non-blank line beginning with "//" is the window title for the slide show.
+
 For affirmations, the first part of the line is the affirmation.
 
 The second part of the line, between "[" and "]" indicates the font, color, and positioning of the affirmation; and the image, image size, and image position.
@@ -61,7 +63,7 @@ The affirmations.example.txt shows examples of all these setttings.
 
 # The Configurations File
 
-The Configurations file is a JSON formatted file that has settings like the screen title, slide show speed, and default fonts and outline widths.
+The Configurations file is a JSON formatted file that has settings like the screen size, slide show speed, and default fonts and outline widths.
 
 If you're not familiar with JSON files they are meant to be modified by hand but can be finicky. It is sometimes handy to put a misbehaving file in an online JSON parser and let the parser point out the place in the file that is barfing.
 

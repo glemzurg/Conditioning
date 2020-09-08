@@ -23,9 +23,6 @@ const (
 	// _KEY_UP    uint = 65362
 	_KEY_RIGHT uint = 65363
 	// _KEY_DOWN  uint = 65364
-
-	// The default window title.
-	_DEFAULT_TITLE = "Affirmations"
 )
 
 func main() {
@@ -62,7 +59,8 @@ func main() {
 	log.Printf("\n\nCommands are LEFT+RIGHT ARROWS (go back and forth in slide show), SPACE (start/stop slide show), R (toggle order of slideshow to random), L (reload from file)\n\n")
 
 	// Load the affiramtions.
-	if err = system.Load(); err != nil {
+	title, err := system.Load()
+	if err != nil {
 		log.Fatal(err)
 	}
 
@@ -75,10 +73,7 @@ func main() {
 	if err != nil {
 		log.Fatal("Unable to create window:", err)
 	}
-	title := _DEFAULT_TITLE
-	if config.Title != "" {
-		title = config.Title
-	}
+
 	win.SetTitle(title)
 	win.Connect("destroy", func() {
 		gtk.MainQuit()
@@ -104,9 +99,11 @@ func main() {
 			}
 
 		case _KEY_L:
-			if err = system.Load(); err != nil {
+			title, err = system.Load()
+			if err != nil {
 				log.Printf(`key-press-event Load(): %+v`, err)
 			}
+			win.SetTitle(title)
 			win.QueueDraw()
 
 		case _KEY_R:

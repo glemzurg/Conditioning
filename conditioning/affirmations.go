@@ -8,6 +8,11 @@ import (
 	"strings"
 )
 
+const (
+	// The default slide show title.
+	_DEFAULT_TITLE = "Affirmations"
+)
+
 // Affirmation is a single affirmation.
 type Affirmation struct {
 	Message string           // The text of the affirmation.
@@ -32,13 +37,30 @@ type TextProperties struct {
 }
 
 // parseAffirmations parses the affirmation text.
-func parseAffirmations(unparsed string) (affirmations []Affirmation) {
+func parseAffirmations(unparsed string) (affirmations []Affirmation, title string) {
 
 	// Split the text on newlines.
 	lines := strings.Split(unparsed, "\n")
+	parsedNonBlankLine := false
 	for _, line := range lines {
 		line = strings.TrimSpace(line)
-		if !(line == "" || strings.HasPrefix(line, "//")) {
+		switch {
+
+		case strings.HasPrefix(line, "//"):
+			// This is a comment.
+			if !parsedNonBlankLine {
+				// The comment before all else, this is the title.
+				title = strings.TrimSpace(strings.TrimLeft(line, "/"))
+			}
+
+			// We have parsed a line (even a comment)
+			parsedNonBlankLine = true
+
+		case line == "":
+			// This is a blank line.
+
+		default:
+			// Not a comment? Not a blank line? This is an affirmation.
 
 			// Split out the affirmation mesage from the display details.
 			lineParts := strings.Split(line, "[")
@@ -73,10 +95,13 @@ func parseAffirmations(unparsed string) (affirmations []Affirmation) {
 				Image:   image,
 				Text:    text,
 			})
+
+			// We have parsed a line.
+			parsedNonBlankLine = true
 		}
 	}
 
-	return affirmations
+	return affirmations, title
 }
 
 // parseImage parses the part of an affirmation that
@@ -197,22 +222,26 @@ func parseText(text string) (textDetails TextProperties, parsed bool) {
 }
 
 // LoadAffirmations loads the affirmations from the affirmations file.
-func LoadAffirmations(affirmationFilename string) (affirmations []Affirmation, err error) {
+func LoadAffirmations(affirmationFilename string) (affirmations []Affirmation, title string, err error) {
 
 	// Open the file.
 	file, err := os.Open(affirmationFilename)
 	if err != nil {
-		return nil, err
+		return nil, "", Error(err)
 	}
 	defer file.Close()
 
 	// Load the bytes from the file.
 	bytes, err := ioutil.ReadAll(file)
 	if err != nil {
-		return nil, err
+		return nil, "", Error(err)
 	}
 
 	// Extract the affirmations.
-	affirmations = parseAffirmations(string(bytes))
-	return affirmations, nil
+	affirmations, title = parseAffirmations(string(bytes))
+	if title == "" {
+		title = _DEFAULT_TITLE
+	}
+
+	return affirmations, title, nil
 }
